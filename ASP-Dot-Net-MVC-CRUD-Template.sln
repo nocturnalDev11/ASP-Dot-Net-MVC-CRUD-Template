@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASP-Dot-Net-MVC-CRUD-Template", "ASP-Dot-Net-MVC-CRUD-Template.csproj", "{FE9AB00D-B5E2-5754-E640-3A7DD2B13598}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FE9AB00D-B5E2-5754-E640-3A7DD2B13598}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE9AB00D-B5E2-5754-E640-3A7DD2B13598}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE9AB00D-B5E2-5754-E640-3A7DD2B13598}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE9AB00D-B5E2-5754-E640-3A7DD2B13598}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6EB9D8F5-1996-4265-A5FD-0E730C876810}
+	EndGlobalSection
+EndGlobal

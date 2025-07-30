@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="../buildMultiTargeting/ASP-Dot-Net-MVC-CRUD-Template.props" />
+</Project>

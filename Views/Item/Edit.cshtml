@@ -1,0 +1,34 @@
+@model ASP_Dot_Net_MVC_CRUD_Template.Models.Item
+@{
+    ViewData["Title"] = "Edit Item";
+}
+
+<h2>Edit Item</h2>
+
+<form asp-action="Edit">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Id" />
+    <!-- Copy form fields from Create.cshtml -->
+    <div class="form-group">
+        <label asp-for="SampleString"></label>
+        <input asp-for="SampleString" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="SampleNumber"></label>
+        <input asp-for="SampleNumber" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="SampleDecimal"></label>
+        <input asp-for="SampleDecimal" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="SampleBool"></label>
+        <input asp-for="SampleBool" class="form-check-input" type="checkbox" />
+    </div>
+    <div class="form-group">
+        <label asp-for="SampleCharacter"></label>
+        <input asp-for="SampleCharacter" class="form-control" maxlength="1" />
+    </div>
+    <button type="submit" class="btn btn-warning mt-2">Update</button>
+    <a asp-action="Index" class="btn btn-secondary mt-2">Back</a>
+</form>

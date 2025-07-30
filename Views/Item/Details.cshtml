@@ -1,0 +1,16 @@
+@model ASP_Dot_Net_MVC_CRUD_Template.Models.Item
+@{
+    ViewData["Title"] = "Item Details";
+}
+
+<h2>Item Details</h2>
+<table class="table table-bordered">
+    <tr><th>ID</th><td>@Model.Id</td></tr>
+    <tr><th>String</th><td>@Model.SampleString</td></tr>
+    <tr><th>Number</th><td>@Model.SampleNumber</td></tr>
+    <tr><th>Decimal</th><td>@Model.SampleDecimal</td></tr>
+    <tr><th>Bool</th><td>@Model.SampleBool</td></tr>
+    <tr><th>Char</th><td>@Model.SampleCharacter</td></tr>
+</table>
+
+<a asp-action="Index" class="btn btn-secondary">Back</a>
