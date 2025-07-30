@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ASP-Dot-Net-MVC-CRUD-Template")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+981b4589f15a2ddd9825dec8f20d3a30ae263848")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+efc2d2b24ae0cb74e4dab25bb8111d9e71a292b1")]
 [assembly: System.Reflection.AssemblyProductAttribute("ASP-Dot-Net-MVC-CRUD-Template")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ASP-Dot-Net-MVC-CRUD-Template")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
