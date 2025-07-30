@@ -108,3 +108,4 @@
 /home/lutrezehuejacinto/Projects/CSharp-Project-Tempates/ASP-Dot-Net-MVC-Template/ASP-Dot-Net-MVC-CRUD-Template/obj/Debug/net8.0/ASP-Dot-Net-MVC-CRUD-Template.pdb
 /home/lutrezehuejacinto/Projects/CSharp-Project-Tempates/ASP-Dot-Net-MVC-Template/ASP-Dot-Net-MVC-CRUD-Template/obj/Debug/net8.0/ASP-Dot-Net-MVC-CRUD-Template.genruntimeconfig.cache
 /home/lutrezehuejacinto/Projects/CSharp-Project-Tempates/ASP-Dot-Net-MVC-Template/ASP-Dot-Net-MVC-CRUD-Template/obj/Debug/net8.0/ref/ASP-Dot-Net-MVC-CRUD-Template.dll
+/home/lutrezehuejacinto/Projects/CSharp-Project-Tempates/ASP-Dot-Net-MVC-Template/ASP-Dot-Net-MVC-CRUD-Template/obj/Debug/net8.0/ASP-Dot-Net-MVC-CRUD-Template.sourcelink.json
