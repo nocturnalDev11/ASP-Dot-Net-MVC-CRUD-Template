@@ -1,6 +1,6 @@
 *.cs linguist-language=C#
-*.cshtml linguist-language=HTML
-*.js linguist-language=JavaScript
-*.css linguist-language=CSS
+*.html linguist-detectable=false
+*.css linguist-detectable=false
+*.js linguist-detectable=false
 *.dll linguist-detectable=false
 *.json linguist-detectable=false
