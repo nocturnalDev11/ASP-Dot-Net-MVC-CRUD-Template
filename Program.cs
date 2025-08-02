@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 var jwtSettings = builder.Configuration.GetSection("Jwt");
 var keyString = jwtSettings["Key"] ?? throw new InvalidOperationException("JWT Key missing in config");
 var key = Encoding.UTF8.GetBytes(keyString);
+var authApiBase = builder.Configuration["AuthApi:BaseUrl"];
 
 builder.Services.AddControllersWithViews();
 
@@ -40,7 +41,10 @@ builder.Services.AddAuthentication(options =>
 // Configure Identity
 builder.Services.AddAuthorization();
 builder.Services.AddSession();
-builder.Services.AddHttpClient();
+builder.Services.AddHttpClient("AuthClient", client =>
+{
+    client.BaseAddress = new Uri(authApiBase);
+});
 
 var app = builder.Build();
 

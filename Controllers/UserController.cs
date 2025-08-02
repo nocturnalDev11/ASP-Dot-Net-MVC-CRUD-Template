@@ -19,7 +19,7 @@ public class UserController : Controller
     [HttpPost]
     public async Task<IActionResult> Login(LoginDto dto)
     {
-        var client = _httpClientFactory.CreateClient();
+        var client = _httpClientFactory.CreateClient("AuthClient");
 
         var response = await client.PostAsJsonAsync("/api/auth/login", dto);
 
@@ -31,6 +31,12 @@ public class UserController : Controller
 
         var result = await response.Content.ReadFromJsonAsync<JwtResponseDto>();
 
+        if (result == null || string.IsNullOrEmpty(result.Token))
+        {
+            ViewBag.Error = "Invalid JWT response.";
+            return View();
+        }
+
         HttpContext.Session.SetString("JWT", result.Token);
 
         return RedirectToAction("Index", "Item");
@@ -41,7 +47,7 @@ public class UserController : Controller
     [HttpPost]
     public async Task<IActionResult> Register(User user)
     {
-        var client = _httpClientFactory.CreateClient();
+        var client = _httpClientFactory.CreateClient("AuthClient");
 
         var response = await client.PostAsJsonAsync("/api/auth/register", user);
 
@@ -66,7 +72,7 @@ public class UserController : Controller
 
         client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
 
-        var response = await client.GetAsync("/api/user/profile"); // Example protected endpoint
+        var response = await client.GetAsync("/api/user/profile");
 
         if (!response.IsSuccessStatusCode)
         {
@@ -74,7 +80,7 @@ public class UserController : Controller
             return RedirectToAction("Login");
         }
 
-        var profile = await response.Content.ReadFromJsonAsync<UserProfileDto>(); // Create this model
+        var profile = await response.Content.ReadFromJsonAsync<UserProfileDto>();
         return View(profile);
     }
 

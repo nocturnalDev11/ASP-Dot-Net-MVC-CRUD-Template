@@ -2,6 +2,8 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using ASP_Dot_Net_MVC_CRUD_Template.Models;
+using System.Security.Claims; 
+using System.Linq;
 
 namespace ASP_Dot_Net_MVC_CRUD_Template.Controllers
 {
@@ -14,7 +16,13 @@ namespace ASP_Dot_Net_MVC_CRUD_Template.Controllers
             _context = context;
         }
 
-        private IActionResult CheckSession()
+        private int GetCurrentUserId()
+        {
+            var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+            return userIdClaim != null ? int.Parse(userIdClaim.Value) : throw new Exception("User ID not found in token.");
+        }
+
+        private IActionResult? CheckSession()
         {
             if (string.IsNullOrEmpty(HttpContext.Session.GetString("JWT")))
             {
@@ -48,10 +56,19 @@ namespace ASP_Dot_Net_MVC_CRUD_Template.Controllers
 
             if (ModelState.IsValid)
             {
-                _context.Items.Add(item);
-                _context.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    item.UserId = GetCurrentUserId();
+                    _context.Items.Add(item);
+                    _context.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Error = ex.Message;
+                }
             }
+
             return View(item);
         }
 
