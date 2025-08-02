@@ -1,3 +1,10 @@
+using System.Net.Http;
+using System.Net.Http.Json;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
+using ASP_Dot_Net_MVC_CRUD_Template.Models;
+
 public class UserController : Controller
 {
     private readonly IHttpClientFactory _httpClientFactory;
@@ -13,6 +20,7 @@ public class UserController : Controller
     public async Task<IActionResult> Login(LoginDto dto)
     {
         var client = _httpClientFactory.CreateClient();
+
         var response = await client.PostAsJsonAsync("/api/auth/login", dto);
 
         if (!response.IsSuccessStatusCode)
@@ -22,7 +30,9 @@ public class UserController : Controller
         }
 
         var result = await response.Content.ReadFromJsonAsync<JwtResponseDto>();
+
         HttpContext.Session.SetString("JWT", result.Token);
+
         return RedirectToAction("Index", "Item");
     }
 
@@ -32,6 +42,7 @@ public class UserController : Controller
     public async Task<IActionResult> Register(User user)
     {
         var client = _httpClientFactory.CreateClient();
+
         var response = await client.PostAsJsonAsync("/api/auth/register", user);
 
         if (!response.IsSuccessStatusCode)
@@ -41,6 +52,30 @@ public class UserController : Controller
         }
 
         return RedirectToAction("Login");
+    }
+
+    public async Task<IActionResult> Profile()
+    {
+        var token = HttpContext.Session.GetString("JWT");
+        if (string.IsNullOrEmpty(token))
+        {
+            return RedirectToAction("Login");
+        }
+
+        var client = _httpClientFactory.CreateClient();
+
+        client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
+        var response = await client.GetAsync("/api/user/profile"); // Example protected endpoint
+
+        if (!response.IsSuccessStatusCode)
+        {
+            ViewBag.Error = "Failed to load profile.";
+            return RedirectToAction("Login");
+        }
+
+        var profile = await response.Content.ReadFromJsonAsync<UserProfileDto>(); // Create this model
+        return View(profile);
     }
 
     public IActionResult Logout()
