@@ -2,8 +2,9 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using ASP_Dot_Net_MVC_CRUD_Template.Models;
-using System.Security.Claims; 
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System;
 
 namespace ASP_Dot_Net_MVC_CRUD_Template.Controllers
 {
@@ -16,10 +17,25 @@ namespace ASP_Dot_Net_MVC_CRUD_Template.Controllers
             _context = context;
         }
 
-        private int GetCurrentUserId()
+        private int GetCurrentUserIdFromJwt()
         {
-            var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
-            return userIdClaim != null ? int.Parse(userIdClaim.Value) : throw new Exception("User ID not found in token.");
+            var jwt = HttpContext.Session.GetString("JWT");
+            if (string.IsNullOrEmpty(jwt))
+                throw new Exception("JWT not found in session.");
+
+            var handler = new JwtSecurityTokenHandler();
+            var token = handler.ReadJwtToken(jwt);
+
+            var userIdClaim = token.Claims.FirstOrDefault(c =>
+                c.Type == "nameid" ||
+                c.Type == "sub" ||
+                c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"
+            );
+
+            if (userIdClaim == null)
+                throw new Exception("UserId claim not found in JWT.");
+
+            return int.Parse(userIdClaim.Value);
         }
 
         private IActionResult? CheckSession()
@@ -54,19 +70,25 @@ namespace ASP_Dot_Net_MVC_CRUD_Template.Controllers
             var sessionCheck = CheckSession();
             if (sessionCheck != null) return sessionCheck;
 
-            if (ModelState.IsValid)
+            try
             {
-                try
+                item.UserId = GetCurrentUserIdFromJwt();
+
+                Console.WriteLine("Create POST reached");
+                Console.WriteLine($"Item Name: {item.SampleString}, UserId: {item.UserId}");
+                Console.WriteLine("JWT from session: " + HttpContext.Session.GetString("JWT"));
+
+                if (ModelState.IsValid)
                 {
-                    item.UserId = GetCurrentUserId();
                     _context.Items.Add(item);
                     _context.SaveChanges();
                     return RedirectToAction("Index");
                 }
-                catch (Exception ex)
-                {
-                    ViewBag.Error = ex.Message;
-                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+                Console.WriteLine("ERROR: " + ex.Message);
             }
 
             return View(item);
