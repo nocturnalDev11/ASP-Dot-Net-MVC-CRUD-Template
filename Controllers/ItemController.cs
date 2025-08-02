@@ -13,7 +13,13 @@ public class ItemController : Controller
         _context = context;
     }
 
-    public IActionResult Index() => View(_context.Items.ToList());
+    public IActionResult Index()
+    {
+        if (string.IsNullOrEmpty(HttpContext.Session.GetString("JWT")))
+            return RedirectToAction("Login", "User");
+
+        return View(_context.Items.ToList());
+    }
 
     public IActionResult Create() => View();
 

@@ -37,7 +37,10 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+// Configure Identity
 builder.Services.AddAuthorization();
+builder.Services.AddSession();
+builder.Services.AddHttpClient();
 
 var app = builder.Build();
 
@@ -48,6 +51,8 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseSession();
+// app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 
