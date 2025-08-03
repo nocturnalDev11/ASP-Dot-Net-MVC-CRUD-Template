@@ -10,5 +10,8 @@ namespace ASP_Dot_Net_MVC_CRUD_Template.Models
         public float SampleFloat { get; set; }
         public bool SampleBool { get; set; }
         public char SampleCharacter { get; set; }
+        
+        public int UserId { get; set; }
+        public User? User { get; set; }
     }
 }
